@@ -8,14 +8,14 @@
 # decided.ly / davehilowitz.com
 #
 
-import grid_instrument
+from grid_instrument import GridInstrument
 import rtmidi
 import time
 
 def note_callback(messageType, midiNote, velocity):
-	if messageType is "note_on":
+	if messageType == "note_on":
 		midiout.send_message([0x90, midiNote, velocity])
-	elif messageType is "note_off":
+	elif messageType == "note_off":
 		midiout.send_message([0x80, midiNote, velocity])
 
 # Create a MIDI output port
@@ -23,7 +23,7 @@ midiout = rtmidi.MidiOut()
 midiout.open_virtual_port("Grid Instrument (Virtual Port)")
 
 # Set up GridInstrument
-instrument = grid_instrument.GridInstrument()
+instrument = GridInstrument()
 instrument.intro_message = 'grid'
 instrument.note_callback = note_callback
 instrument.start()
